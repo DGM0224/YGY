@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.btn.btn-outline-danger:hover {
+	background-color: #F2055C;
+	color: white;
+}
+
+input.form-control:focus {
+	border-color: #F2055C;
+	box-shadow: 0 0 5px rgba(242, 5, 92, 0.5);
+	outline: none;
+}
+
+.input-group-text {
+	background-color: #fcfcfc !important;
+}
+
+.id:hover, .pass:hover {
+	font-weight: bold !important;
+}

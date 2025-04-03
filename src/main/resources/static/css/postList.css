@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.btn-custom-danger {
+	background-color: #F2055C;
+	border-color: #F2055C;
+	color: white; /* 텍스트 색상도 변경 가능 */
+	font-family: "Jua", sans-serif;
+}
+
+.btn-custom-danger:hover {
+	border-color: #F2055C;
+	color: #F2055C;
+}
+
+.btn-custom-danger2 {
+	border-color: #F2055C !important;
+	color: #F2055C !important;
+	font-family: "Jua", sans-serif !important;
+}
+
+.btn-custom-danger2:hover {
+	background-color: #F2055C !important;
+	border-color: #F2055C !important;
+	color: white !important;
+	font-family: "Jua", sans-serif !important;
+}
+
+
+/* 페이지네이션 버튼 */
+.pagination .page-link {
+    background-color: white; /* 버튼 배경색 */
+    color: #F2055C; /* 텍스트 색상 */
+}
+
+.pagination .page-link:hover {
+    background-color: #F2055C; /* 호버 시 배경색 */
+    color: white; /* 호버 시 텍스트 색상 */
+}
+
+.pagination .page-item.active .page-link {
+    background-color:  #F2055C; /* 활성화된 페이지 버튼 색상 */
+    color: white; /* 활성화된 페이지 버튼 텍스트 색상 */
+    border: 1px solid #F2055C;
+}
+
+
+/* 리스트 호버 */
+.table > tbody > tr:hover {
+    color: #F2055C; /* 텍스트 색상 변경 */
+    background-color: rgba(0, 0, 0, 0.05); /* 배경색 약간 불투명하게 */
+    cursor: pointer;
+}

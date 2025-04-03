@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.firstBanner {
+	color: #ffffff;
+	font-family: "Bagel Fat One", system-ui;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 50px;
+	background-color: #F2055C;
+	height: 100px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	line-height: 100px;
+}
+
+.text-bagel-fat-one{
+	font-family: 'Bagel Fat One', cursive;
+}
+
+.btn-ygy {
+    background-color: #F2055C !important;
+    font-family: 'Bagel Fat One', cursive !important;
+    color: #ffffff !important;
+}
+
+.btn-ygy1 {
+    background-color: #808080 !important;
+    font-family: 'Bagel Fat One', cursive !important;
+    color: #FFFFFF !important;
+}
+.bg-ygy{
+	background-color: #F2055C !important;
+	color: #FFFFFF !important;
+}

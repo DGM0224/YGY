@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th = "http://www.thymeleaf.org">
+
+
+<!-- header -->
+<th:block th:fragment = "header">
+
+	<div class="row"  style="font-family: Bagel Fat One, system-ui">
+		<div class="col mt-2">
+
+			<div class="row">
+				<div class="col-2 fs-3 ">
+					<a th:href="@{/}" target="_self" style="text-decoration: none; color: #F2055C;">&emsp;여행 기록용</a>
+				</div>	
+				<div class="col-md-4 offset-md-6  mt-1">
+					<ul class="nav text-end" style = "display: flex; justify-content: flex-end">
+						<li class="nav-item ">
+							<th:block th:unless="${session.isLogin}">
+								<a class ="nav-link active" th:href="@{joinForm}" target="_self" style="color: #F2055C;">회원가입</a>
+							</th:block>
+							<th:block th:if="${session.isLogin}">
+								<a class="nav-link" th:href="@{profileUpdateForm}" style="color: #F2055C">프로필 수정</a>
+							</th:block>
+						</li>					
+						<li class="nav-item">							
+							<th:block th:unless="${session.isLogin}">
+								<a class="nav-link" th:href="@{loginForm}" target="_self" style="color: #F2055C;">로그인-폼</a>
+							</th:block>
+							<th:block th:if="${session.isLogin}">
+								<a class="nav-link" th:href="@{memberLogout}" style="color: #F2055C;">로그아웃</a>
+							</th:block>								
+						</li>
+						<li class="nav-item">
+							<th:block th:unless="${session.isLogin}">
+								<a th:href="@{#}" class="nav-link" style="color: #F2055C;"
+								th:attrappend="data-bs-toggle='modal', data-bs-target='#loginModal'">
+									로그인-모달
+								</a>
+							</th:block>
+							<th:block th:if="${session.isLogin}" >							
+								<a class="nav-link" th:href="@{logout}" style="color: #F2055C;">로그아웃-모달</a>
+							</th:block>						
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-end pe-5 text-primary">
+					<div th:if="${session.isLogin}" style="color: #F2055C;">
+						반가워요 [[ ${session.member != null} ? ${session.member.memberId} ]]님 :)
+					</div>
+				</div>
+			</div>
+			
+			<div class="row mt-3 firstBanner">
+				<div class="col text-center">
+					<a th:href="@{/}" class="text-decoration-none" style = "color: white;">여기용</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+</th:block>
+
+
+</html>

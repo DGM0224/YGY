@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.springbootproject.bbs.mapper.PostMapper" >
+
+<select id = "postList" >
+	SELECT * 
+	FROM post
+	<where>
+		board_no = #{boardNo}
+		<if test="type == 'postTitle'">
+			AND post_title LIKE CONCAT('%', #{keyword}, '%')			
+		</if>
+		<if test="type == 'writer'">
+			AND writer LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="type == 'postContent'">
+			AND post_content LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+	</where>
+	ORDER BY post_no DESC
+	LIMIT #{startRow}, #{num}
+</select>
+
+<select id="getPostCount">
+	SELECT COUNT(post_no)
+	FROM post
+		<where>
+			board_no = #{boardNo}
+			<if test="type == 'postTitle'">
+				AND post_title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'writer'">
+				AND writer LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'postContent'">
+				AND post_content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+</select>
+
+<select id = "getPost" resultType = "Post">
+	SELECT *
+	FROM post
+	WHERE post_no = #{postNo}
+</select>
+
+<select id="prePost" resultType="int">
+    SELECT post_no 
+    FROM post 
+    WHERE post_no &lt; #{currentPostNo} AND board_no = #{boardNo}
+    ORDER BY post_no DESC 
+    LIMIT 1
+</select>
+
+<select id="nextPost" resultType="int">
+    SELECT post_no 
+    FROM post 
+    WHERE post_no &gt; #{currentPostNo} AND board_no = #{boardNo}
+    ORDER BY post_no ASC 
+    LIMIT 1
+</select>
+
+<select id="notification" parameterType="int" resultType="Post">
+    SELECT * 
+    FROM post 
+    WHERE board_no = #{boardNo} 
+    ORDER BY post_no DESC 
+    LIMIT 5
+</select>
+
+<select id="getTopPosts" resultType="Post">
+    SELECT *
+    FROM post
+    WHERE board_no != 7000
+    ORDER BY view_count DESC
+    LIMIT 5
+</select>
+
+
+<insert id="insertPost" parameterType="Post" useGeneratedKeys="true" keyProperty="postNo">
+	INSERT INTO post(board_no, post_title, writer, post_content, post_date, view_count, file1)
+	VALUES(#{boardNo}, #{postTitle}, #{writer}, #{postContent}, SYSDATE(), #{viewCount}, #{file1})
+</insert>
+
+<update id="updatePost" parameterType="Post">
+	UPDATE post
+	SET board_no = #{boardNo}, post_title = #{postTitle}, post_content = #{postContent}, post_date = SYSDATE()
+	WHERE post_no = #{postNo}
+</update>
+
+<delete id="deletePost">
+	DELETE FROM post
+	WHERE post_no = #{postNo}
+</delete>
+
+<update id="incrementReadCount">
+	UPDATE post
+	SET view_count = view_count + 1
+	WHERE post_no = #{postNo}
+</update>
+
+<update id="updateRecommend">
+	UPDATE post
+	SET
+	<if test="like == 'good'">
+		good = good + 1
+	</if>
+	<if test="like == 'bad'">
+		bad = bad + 1
+	</if>
+	WHERE post_no = #{postNo}
+</update>
+
+<select id="getRecommend">
+	SELECT good, bad
+	FROM post
+	WHERE post_no = #{postNo}
+</select>
+
+<select id="replyList">
+	SELECT *
+	FROM reply
+	WHERE post_no = #{postNo}
+	ORDER BY reply_no DESC
+</select>
+
+<insert id="addReply">
+	INSERT INTO reply(post_no, reply_content, reply_writer, reply_date)
+	VALUES(#{postNo}, #{replyContent}, #{replyWriter}, SYSDATE())
+</insert>
+
+<update id="updateReply">
+	UPDATE reply
+	SET reply_content = #{replyContent}, reply_date = SYSDATE()
+	WHERE reply_no = #{replyNo}
+</update>
+
+<delete id="deleteReply">
+	DELETE 
+	FROM reply
+	WHERE reply_no = #{replyNo}
+</delete>
+
+<delete id="deleteAllReply">
+	DELETE FROM reply
+	WHERE post_no = #{postNo}
+</delete>
+
+
+</mapper>	
+
+
+

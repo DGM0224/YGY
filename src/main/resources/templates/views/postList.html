@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main_layout}">
+
+<th:block layout:fragment="content" class="bg-light">
+<div class="row" >
+	<div class="col">
+		
+		<div th:if="${addPostMessage}">
+		    <script>
+		        alert("[[${addPostMessage}]]");
+		    </script>
+		</div>
+		<div th:if="${updatePostMessage}">
+		    <script>
+		        alert("[[${updatePostMessage}]]");
+		    </script>
+		</div>
+		<div th:if="${deletePostMessage}">
+		    <script>
+		        alert("[[${deletePostMessage}]]");
+		    </script>
+		</div>
+
+	
+		<form name="noForm" id="noForm">
+			<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}"/>
+			<input type="hidden" name="pageNum" th:value="${pageNum}"/>
+			<th:block th:if=${searchOption}>
+				<input type="hidden" name="type" th:value="${ type }" />
+				<input type="hidden" name="keyword" th:value="${ keyword }" />
+			</th:block>
+		</form>
+		
+		
+		<div class="row">		
+			<div class = "col" >
+				<div class="row">
+					<div class="col mb-2"
+						th:style="'height: 350px; background-image: url(' + ${backgroundImage} + '); background-size: cover; background-position: center 70%;'"
+						th:onclick = "location.href='/'">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div th:each="board:${board}"
+						class="col mx-5 mt-5 d-flex justify-content-center">
+						<a th:href="@{postList(boardNo=${board.boardNo})}"
+							class="text-decoration-none fw-bold"
+							style="font-family: Jua, sans-serif; color: #F2055C; font-size: 80px;">
+							[[${board.boardTitle}]]</a>
+					</div>
+	
+				</div>
+
+				<div class="row my-3" th:if="${searchOption}">
+				    <div class="col text-center" style="font-family: Jua, sans-serif;">
+				        <th:block th:if="${type == 'postTitle'}">
+				            제목 - "[[${ keyword }]]" 검색 결과
+				        </th:block>
+				        <th:block th:if="${type == 'writer'}">
+				            작성자 - "[[${ keyword }]]" 검색 결과
+				        </th:block>
+				        <th:block th:if="${type == 'postContent'}">
+				            내용 - "[[${ keyword }]]" 검색 결과
+				        </th:block>
+				    </div>
+				</div>
+
+				<div class="row my-3">
+					<div class="col-md-1 offset-md-11 ">
+						<a th:href = "@{write}" th:if = "${board.boardNo != 7000}" ><button type="button" name = "writeBtn" id = "writeBtn" class="btn btn-custom-danger2 text-decoration-none">글쓰기</button></a>		    	
+					</div>
+				</div>
+
+				<div class="row my-3" style="font-family: Jua, sans-serif;">
+					<div class="col text-center">
+						<table class="table">
+							<thead>
+								<tr class="table">
+									<th>NO</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>조회수</th>
+								</tr>
+							</thead> 
+							<tbody> 
+								<th:block th:if="${searchOption and not #lists.isEmpty(pList)}">
+									<tr th:block th:each="post, status: ${pList}">										
+										<td>[[ ${post.postNo} ]]</td>									
+										<td class = "text-start"><a th:href="@{postDetail(postNo=${post.postNo}, boardNo=${board.boardNo}, pageNum=${currentPage}, type=${type}, keyword=${keyword})}" class=" text-decoration-none text-dark" >[[ ${post.postTitle} ]]</a></td>										
+										<td th:text="${post.writer}"></td>
+										<td>[[${ #dates.format(post.postDate, 'yyyy-MM-dd') }]]</td>
+										<td th:text="${ post.viewCount }"></td>
+									</tr>
+								</th:block>
+								<th:block th:if="${searchOption and #lists.isEmpty(pList)}">
+									<tr>
+										<td colspan="5">"[[${keyword}]]"가 포함된 게시글이 존재하지 않음</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${not searchOption and not #lists.isEmpty(pList)}">
+									<tr th:block th:each="post, status: ${pList}">
+										<td>[[ ${post.postNo} ]]</td>
+										<td class = "text-start"><a th:href="@{postDetail(postNo=${post.postNo}, boardNo=${board.boardNo}, pageNum=${currentPage})}" class="text-decoration-none text-dark">[[ ${post.postTitle} ]]</a></td>
+										<td th:text="${ post.writer }"></td>
+										<td>[[${ #dates.format(post.postDate, 'yyyy-MM-dd') }]]</td>
+										<td th:text="${ post.viewCount  }"></td>
+									</tr>										
+								</th:block>								
+								<th:block th:if="${not searchOption and #lists.isEmpty(pList)}">
+									<tr>
+										<td colspan="5">게시글이 존재하지 않음</td>											
+									</tr>
+								</th:block>																
+							</tbody>						
+						</table>
+					</div>
+				</div>			
+				<div class = "row">
+					<div class = "col">
+						<nav th:if="${searchOption and not #lists.isEmpty(pList)}" aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+		
+								<li class="page-item" th:if="${ startPage > pageGroup }">
+									<a class="page-link" th:href="@{|?boardNo=${board.boardNo}&pageNum=${startPage - 1}&type=${type}&keyword=${keyword}|}">Pre</a>
+								</li>
+			
+								<li th:each="num : ${ #numbers.sequence(startPage, endPage) }"
+									th:classappend="${num == currentPage} ? 'active'"
+									class="page-item" aria-current="page">		
+									<th:block th:if="${num != currentPage}">
+										<a
+										th:text="${num}"
+										th:href="@{|?boardNo=${board.boardNo}&pageNum=${num}&type=${type}&keyword=${keyword}|}"
+										class="page-link"></a>
+									</th:block>
+		
+									<th:block th:unless="${num != currentPage}">
+										<span th:text="${num}" class="page-link"></span>
+									</th:block>
+								</li>
+		
+								<li class="page-item" th:if="${endPage < pageCount}">
+									<a
+									class="page-link"
+									th:href="@{|?boardNo=${board.boardNo}&pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}|}">Next</a>
+								</li>
+							</ul>
+						</nav>
+						<nav th:if="${not searchOption and not #lists.isEmpty(pList)}" aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+		
+								<li class="page-item" th:if="${ startPage > pageGroup }">
+									<a class="page-link" th:href="@{|?boardNo=${board.boardNo}&pageNum=${startPage - 1}|}">Pre</a>
+								</li>
+			
+								<li th:each="num : ${ #numbers.sequence(startPage, endPage) }"
+								th:classappend="${num == currentPage} ? 'active'"
+								class="page-item" aria-current="page">
+		
+									<th:block th:if="${num != currentPage}">
+										<a
+										th:text="${num}"
+										th:href="@{|?boardNo=${board.boardNo}&pageNum=${num}|}"
+										class="page-link"></a>
+									</th:block>
+		
+									<th:block th:unless="${num != currentPage}">
+										<span th:text="${num}" class="page-link"></span>
+									</th:block>
+								</li>
+		
+								<li class="page-item" th:if="${endPage < pageCount}">
+									<a
+									class="page-link"
+									th:href="@{|?boardNo=${board.boardNo}&pageNum=${startPage + pageGroup}|}">Next</a>
+								</li>
+							</ul>
+						</nav>									
+					</div>				
+				</div>	
+				<form name="searchForm" id="searchForm" action="postList"
+						class="my-5 row d-flex justify-content-center">
+						<div class="col-auto">
+							<select name="type" class="form-select " style="width: 90px;">
+								<option value="postTitle">제목</option>
+								<option value="writer">작성자</option>
+								<option value="postContent">내용</option>
+							</select>
+						</div>
+						<div class="col-auto">
+							<input type="text" name="keyword" class="form-control" aria-label="Search">
+						</div>
+						<div class="col-auto">
+							<button class="btn btn-custom-danger2" type="submit">검색</button>
+						</div>
+						<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}" />
+				</form>
+							
+			</div>										
+		</div>
+		
+	
+	</div>
+</div>
+
+
+
+
+
+
+
+</th:block>
+
+</html>

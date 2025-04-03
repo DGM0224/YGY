@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.springbootproject.bbs.mapper.MemberMapper" >
+
+
+<select id="getMember">
+	SELECT * 
+	FROM member 
+	WHERE member_id = #{memberId}
+</select>
+
+<select id="memberPassCheck">
+	SELECT member_pass
+	FROM member
+	WHERE member_id = #{memberId}
+</select>
+
+<insert id="addMember">
+	INSERT INTO member (member_id, member_name, member_pass, email, mobile, zipcode, address1, address2, phone, email_get, member_date)
+	VALUES (#{memberId}, #{memberName}, #{memberPass}, #{email}, #{mobile}, #{zipcode}, #{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE())
+</insert>
+
+<update id="updateMember">
+	UPDATE member
+	SET member_pass=#{memberPass}, member_name = #{memberName}, email=#{email}, mobile=#{mobile},
+	zipcode=#{zipcode}, address1=#{address1}, address2=#{address2},
+	phone=#{phone}, email_get=#{emailGet}, member_date=SYSDATE()
+	WHERE member_id=#{memberId}
+</update>
+
+
+
+
+
+</mapper>	
+
+
+

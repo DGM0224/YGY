@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.notice{
+	border-radius: 10px;
+	border: 2px solid red; 
+}
+
+.notice2{
+	border-radius: 10px;
+	border: 2px solid #F2055C; 
+	
+}
+
+.di-stars{
+	color: #F2055C;
+}
+
+.photo{
+	height: 400px;
+	border-radius: 10px;
+	background-size: cover;
+	background-position: center 30%;
+}
+
+.btn-custom-danger {
+	background-color: #F2055C !important;
+	border-color: #F2055C !important;
+	color: white !important; 
+}
+
+
+

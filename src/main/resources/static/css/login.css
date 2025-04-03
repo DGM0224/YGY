@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+.logo {
+	color: #F2055C;
+	font-family: "Bagel Fat One", system-ui;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 70px;
+	margin: 0;
+	height: 100px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	line-height: 100px;
+}
+
+.nav-item {
+	display: flex;
+	width: 50%;
+	background-color: #f0efef;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid #f0efef;
+	border-radius: 7px 7px 0 0;
+	border-bottom: none;
+	height: 60px;
+}
+
+.nav-tabs {
+	width: 100%;
+	height: 59px;
+	display: flex;
+	border-bottom: none;
+	background-color: #e0dede;
+	border-radius: 7px;
+}
+
+.nav-tabs .nav-link {
+	width: 100%;
+	height: 59px;
+	border: none;
+	color: #666;
+	padding: 12px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.nav-tabs .nav-link.active {
+	width: 100%;
+	background-color: white;
+	color: #F2055C;
+	border: none;
+}
+
+.tab-content {
+	border: 2px solid #f0efef;
+	border-radius: 0 0 7px 7px;
+	background-color: white;
+	border-top: none;
+	padding: 50px 50px 20px;
+}
+
+.form-control:focus {
+	border-color: #F2055C;
+	box-shadow: 0 0 5px rgba(242, 5, 92, 0.5);
+	outline: none;
+}
+
+.btn-outline-danger:hover {
+	background-color: #F2055C;
+	color: white;
+}
+
+.form-check {
+	position: relative;
+	font-size: 14px;
+	float: right;
+	text-align: right;
+}
+
+.login-footer a {
+	font-size: 12px;
+	text-decoration: none;
+	color: #666;
+}

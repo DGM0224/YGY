@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+/* 코스튬 버튼 */
+.btn-custom-danger {
+	background-color: #F2055C;
+	border-color: #F2055C;
+	color: white; /* 텍스트 색상도 변경 가능 */
+}
+
+.btn-custom-danger:hover {
+	border-color: #F2055C;
+	color: #F2055C;
+}
+
+.btn-custom-danger2 {
+	border-color: #F2055C !important;
+	color: #F2055C !important;
+}
+
+.btn-custom-danger2:hover {
+	background-color: #F2055C !important;
+	border-color: #F2055C !important;
+	color: white !important;
+}
+.btn-primary {
+   background-color: #F2055C !important;
+   border-color: #F2055C !important;
+}
+
+.textFont {
+	font-family: "Jua", sans-serif;
+}
+
+.deleteReply {
+	width: 50px;
+	height: 30px;
+}
+
+.modifyReply {
+	width: 50px;
+	height: 30px;
+}
+
+.deleteReply .icon {
+	display: none;
+}
+
+.modifyReply .icon {
+	display: none;
+}
+
+.deleteReply:hover .icon {
+	display: inline;
+}
+
+.deleteReply:hover .text {
+	display: none;
+}
+
+.modifyReply:hover .icon {
+	display: inline;
+}
+
+.modifyReply:hover .text {
+	display: none;
+}
+
+.commentlist{
+
+	font-family: "Bagel Fat One", system-ui;
+	color:#F2055C;
+}
+.commentlist-null{
+	font-family: "Bagel Fat One", system-ui;
+	color:black;
+}

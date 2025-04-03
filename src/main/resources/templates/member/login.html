@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여기용</title>
+<link th:href="@{https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap}" rel="stylesheet">
+<link th:href="@{bootstrap/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{css/login.css}" rel="stylesheet">
+
+</head>
+
+<body class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+<div class = "container">
+<form id="loginForm" action="login" method="post">
+
+		<div th:if="${joinMessage}">
+		    <script>
+		        alert("[[${joinMessage}]]");
+		    </script>
+		</div>
+
+	<div class = "row">
+		<div class = "col-md-8 offset-md-2 text-center">
+		
+			<th:block th:unless="${#strings.isEmpty(session.loginMsg)}">
+				<h4 class="fw-bold my-3 text-center text-primary" th:text="${session.loginMsg}">
+					로그인이 필요한 서비스
+				</h4>
+			</th:block>
+		
+			<div class = "row">
+				<div class = "col">
+					<a th:href="@{/}" class="logo mb-5"> 여기용 </a> 
+				</div>			
+			</div>
+			
+			<div class = "row">
+				<div class = "col tab-content" id="nav-tabContent">
+				
+						<div class="login-box">
+							<ul class="nav nav-tabs" id="nav-tab" role="tablist">
+								<li class="nav-item col-6">
+									<button class="nav-link active" id="nav-home-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+										role="tab" aria-controls="nav-home" aria-selected="true">회원</button>
+								</li>
+								<li class="nav-item col-6">
+									<button class="nav-link" id="nav-profile-tab"
+										data-bs-toggle="tab" data-bs-target="#nav-profile"
+										type="button" role="tab" aria-controls="nav-profile"
+										aria-selected="false">비회원</button>
+								</li>
+							</ul>
+							
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="nav-home"
+									role="tabpanel" aria-labelledby="nav-home-tab">
+										<div class="form-floating text-muted mb-3">
+											<input type="text" class="form-control" 
+												placeholder="아이디" id="memberId" name="memberId"> 
+											<label for="floatingInput">아이디</label>
+										</div>
+										<div class="form-floating text-muted mb-3">
+											<input type="password" class="form-control"
+												id="userPass" name="memberPass" placeholder="비밀번호"> 
+											<label for="floatingPassword">비밀번호</label>
+										</div>
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="checkbox" role="switch"
+												id="flexSwitchCheckDefault"> 
+											<label class="form-check-label" for="flexSwitchCheckDefault">
+												자동로그인
+											</label>
+										</div>
+										<button type="submit"
+											class="btn btn-outline-danger w-100 mt-4">로그인</button>
+								</div>
+								<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+									aria-labelledby="nav-profile-tab">
+										<div class="form-floating text-muted mb-3">
+											<input type="password" class="form-control" id="floatingOTP"
+												placeholder="1회용 비밀번호"> 
+											<label for="floatingOTP">1회용 비밀번호</label>
+										</div>
+										<button type="submit"
+											class="btn btn-outline-danger w-100 mt-4">로그인</button>
+								</div>
+							</div>
+							
+							
+						</div>
+
+					</div>			
+			</div>
+			
+			
+			
+			<div class = "row">
+				<div class = "col mt-3">
+					
+					<div class = "row">
+						<div class = "col">
+							<a th:href = "@{joinForm}" class = "text-decoration-none text-secondary">회원가입</a>			
+							<!-- <a th:href = "@{findID}" class = "text-decoration-none text-secondary">&ensp;아이디 찾기&ensp;</a>			
+							<a th:href = "@{findPass}" class = "text-decoration-none text-secondary">비밀번호 찾기</a> -->
+						</div>
+					</div>
+				
+				</div>			
+			</div>
+			
+		</div>
+	</div>
+
+</form>
+</div>
+
+<script th:src="@{bootstrap/bootstrap.bundle.min.js}"></script>
+</body>
+
+
+
+
+</html>

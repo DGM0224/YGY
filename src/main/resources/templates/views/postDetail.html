@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main_layout}">
+
+
+
+<th:block layout:fragment="content" class="bg-light">
+
+	<script src="js/reply.js"></script>
+	<div class="row">
+		<div class="col">
+
+			<form name="checkForm" id="checkForm">
+				<input type="hidden" name="postNo" id="postNo" th:value="${post.postNo}" /> 
+				<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}" /> 
+				<input type="hidden" name="pageNum" th:value="${pageNum}" />
+				<th:block th:if=${searchOption}>
+					<input type="hidden" name="type" th:value="${ type }" />
+					<input type="hidden" name="keyword" th:value="${ keyword }" />
+				</th:block>
+			</form>
+
+
+
+			<div class="row" style="font-family: Jua, sans-serif;" id="detailContent">
+				<div class="col m-5">
+
+					<div class="row mt-2">
+						<div class="col">
+							<a th:href="@{postList(boardNo=${board.boardNo}, pageNum=${pageNum}, type=${type}, keyword=${keyword})}"
+								class=" text-decoration-none" style="color: #F2055C">&lt;
+								[[${board.boardTitle}]] 게시판
+							</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col m-4 d-flex justify-content-center">
+							<a href="#" class="fs-3 text-decoration-none text-dark">[[${post.postTitle}]]</a>
+						</div>
+					</div>
+
+					<div class="row my-3">
+						<div class="col-md-4 offset-md-1">
+							작성자 : <span th:text="${post.writer}"> </span> <br> 작성일 : <span
+								th:text="${post.postDate}"> </span> &nbsp; 조회수 : <span
+								th:text="${post.viewCount}"> </span>
+						</div>
+						<div class="col-md-2 offset-md-4 text-center fs-3">
+							<th:block th:if="${ not #strings.isEmpty(post.file1) }">
+							<a th:href="@{|fileDownload?fileName=${post.file1}|}" class = "text-decoration-none">
+								<button type="button" class="btn btn-custom-danger2 justify-content-center">파일 다운로드</button>
+							</a>									
+							</th:block>
+							<th:block th:unless="${ not #strings.isEmpty(post.file1) }">
+							첨부파일 없음
+							</th:block>
+						</div>
+					</div>
+					<div class="row mx-4" style="border: 2px solid hsl(359, 100%, 65%, 0.1); box-shadow: 0 3px 12px rgba(143, 0, 0, 0.1); border-radius: 10px; background-color: white;">
+						<div class="col">
+						</div>
+					</div>
+					<div class="row my-5 d-flex justify-content-center"
+						style="width: 1100px; margin: auto;">
+						<div class="col-md-12 fs-5" th:text="${post.postContent}" style="white-space: pre-wrap;">
+						</div>
+					</div>
+					<div class="row my-3">
+						<div class="col">
+							<div id="like" class="text-end">
+								<span id="good" class="btnCommend text-primary" style="cursor: pointer;"> 
+									<i class="bi bi-hand-thumbs-up-fill" style="color: #F2055C;"></i>&nbsp;좋아요 
+									<span class="like" th:text="|(${post.good})|"></span>
+								</span> | 
+								<span id="bad" class="btnCommend text-primary" style="cursor: pointer;"> 
+									<i class=" bi bi-hand-thumbs-down-fill" style="color: #F2055C;"></i>&nbsp;싫어요 
+									<span class="like" th:text="|(${post.bad})|"></span>
+								</span> | 
+								<span id="replyWrite" class="text-primary" style="cursor: pointer;"> 
+									<i class=" bi bi-chat-right-dots-fill" style="color: #F2055C;"></i> 댓글쓰기
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row mx-4"
+						style="border: 2px solid hsl(359, 100%, 65%, 0.1); box-shadow: 0 3px 12px rgba(143, 0, 0, 0.1); border-radius: 10px; background-color: white;">
+						<div class="col"></div>
+					</div>
+					<div class="row my-5 d-flex justify-content-center align-items-center">
+						<div class="col-3">
+							<a th:if="${previousPostNo != null}"
+								th:href="@{/postDetail(postNo=${previousPostNo}, boardNo=${post.boardNo}, pageNum=${pageNum})}"
+								class="btn btn-custom-danger2 justify-content-between"> &lt;
+								이전글 </a>
+							<button type="button" th:if="${previousPostNo == null}"
+								class="btn btn-custom-danger2 justify-content-between" disabled>
+								&lt; 이전글</button>
+						</div>
+						<div th:if="${session.member.memberId == post.writer}"
+							class="col-2 text-end">
+							<button type="button" id="detailUpdate"
+								class="btn btn-custom-danger2 justify-content-center">수정</button>
+						</div>
+						<div th:if="${session.member.memberId == post.writer}"
+							class="col-2">
+							<button type="button" id="detailDelete"
+								class="btn btn-custom-danger2 justify-content-center">삭제</button>
+						</div>
+						<div class="col-3 text-end">
+							<a th:if="${nextPostNo != null}"
+								th:href="@{/postDetail(postNo=${nextPostNo}, boardNo=${post.boardNo}, pageNum=${pageNum})}"
+								class="btn btn-custom-danger2 justify-content-between"> 다음글
+								&gt; </a>
+							<button type="button" th:if="${nextPostNo == null}"
+								class="btn btn-custom-danger2 justify-content-between" disabled>
+								다음글 &gt;</button>
+						</div>
+					</div>
+					
+					<div class="row text-center" id="replyTitle" style="border: 2px solid hsl(359, 100%, 65%, 0.1);">
+						<div class="commentlist col  p-2 ">
+							<h5 class="mx-5">댓글</h5>
+						</div>
+					</div>
+					
+					<div th:if="${not #lists.isEmpty(replyList)}" class="row mb-3" style="border: 2px solid hsl(359, 100%, 65%, 0.1);">
+						<div class="col" id="replyList" >
+							<div th:each="reply : ${replyList}" class="replyRow row border border-top-0" >
+								<div class="col" style="border: 2px solid hsl(359, 100%, 65%, 0.1);">
+									<div class="row p-2">
+										<div class="col-4">
+											<span th:text="${reply.replyWriter}" style="font-family: Bagel Fat One, system-ui;">댓글 작성자</span>
+										</div>
+										<div th:if="${session.member.memberId == reply.replyWriter}" class="col-8 text-end">
+											<button class="modifyReply btn btn-outline-success btn-sm" th:data-no="${reply.replyNo}">
+												<span class="icon "><i class="bi bi-pencil-square"></i></span>
+												<span class="text">수정</span>
+											</button>
+											<button class="deleteReply btn btn-outline-warning btn-sm" th:data-no="${reply.replyNo}">
+												<span class="icon "><i class="bi bi-trash"></i></span> 
+												<span class="text">삭제</span>
+											</button>
+										</div>
+										<div th:unless="${session.member.memberId == reply.replyWriter}" class="col-8 text-end">
+											<button class="modifyReply btn btn-outline-success btn-sm" th:data-no="${reply.replyNo}" disabled>
+												<span class="icon "><i class="bi bi-pencil-square"></i></span>
+												<span class="text">수정</span>
+											</button>
+											<button class="deleteReply btn btn-outline-warning btn-sm"
+												th:data-no="${reply.replyNo}" disabled>
+												<span class="icon "><i class="bi bi-trash"></i></span> 
+												<span class="text">삭제</span>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col p-3">
+											<pre th:text="${reply.replyContent}">댓글 내용</pre>
+										</div>
+											<span class="text-end text-secondary me-3" style="font-size:14px;"> [[${#dates.format(reply.replyDate, 'yyyy-MM-dd HH:mm:ss') }]] </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div th:unless="${not #lists.isEmpty(replyList)}"
+						class="row my-3 text-center">
+						<div class="commentlist-null col">댓글이없습니다.</div>
+					</div>
+					
+					<div class="row my-3 d-none" id="replyForm">
+						<div class="col">
+							<form name="replyWriteForm" id="replyWriteForm">
+								<input type="hidden" name="postNo" th:value="${post.postNo}" /> <input
+									type="hidden" name="replyWriter"
+									th:value="${session.member.memberId}" />
+								<div class="row bg-light my-3 p-3 border">
+									<div class="col">
+										<div class="row">
+											<div class="col text-center">
+												<span>악의적인 댓글은 예고 없이 삭제될 수 있으며 글쓰기 제한과 아이디 삭제 처리됩니다.</span>
+											</div>
+										</div>
+										<div class="row my-3">
+											<div class="col-md-10">
+												<textarea name="replyContent" id="replyContent"
+													class="form-control" rows="4"></textarea>
+											</div>
+											<div class="col-md">
+												<input type="submit" value="댓글쓰기"
+													class="btn btn-primary h-100 w-100" id="replyWriteButton">
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>				
+				</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script th:src="@{js/formcheck.js}"></script>
+
+
+</th:block>
+
+</html>

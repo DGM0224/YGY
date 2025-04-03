@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+#global-content {
+	width: 750px;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-label {
+	font-weight: bold;
+}
+
+.btn-color {
+	background-color: #F2055C;
+	border: none;
+	color: white;
+}
+
+.title-text {
+	color: #F2055C;
+}
+
+.btn-outline-primary {
+	border: 1px solid #F2055C;
+	color: #F2055C;
+}
+
+.formBox {
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 15px;
+	padding: 30px;
+	background-color: white;
+	margin: 20px;
+	border: #F2055C;
+	width: 1000px;
+}
+
+h2 {
+	font-family: 'Noto Sans CJK KR';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 47px;
+	color: #F2055C;
+	justify-content: space-evenly;
+}
+
+.btn-custom-danger {
+	background-color: #F2055C;
+	border-color: #F2055C;
+	color: white; 
+}
+
+.btn-custom-danger:hover {
+	border-color: #F2055C;
+	color: #F2055C;
+}
+
+.btn-custom-danger2 {
+	border-color: #F2055C;
+	color: #F2055C;
+}
+
+.btn-custom-danger2:hover {
+	background-color: #F2055C;
+	border-color: #F2055C;
+	color: white;
+}

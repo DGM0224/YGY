@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main_layout}">
+
+<th:block layout:fragment="content" class="bg-light" >
+	<div class="row" style="font-family: Bagel Fat One, system-ui;">
+		<div class="col">
+		
+		<div th:if="${updateProfileMessage}">
+		    <script>
+		        alert("[[${updateProfileMessage}]]");
+		    </script>
+		</div>
+
+			<div class="row" >
+				<div class="col mb-2"
+					style="height: 250px; background-image: url('images/where_you_want_to_go.png'); background-size: cover; background-position: center 30%;">
+
+					<div class="row">
+						<div class="col-md-8 offset-md-2 text-center mt-2">
+							<h3 class="text-white mt-2">
+								<br> <br>어디로 <span style="color: #F2055C;">착륙</span>하시겠습니까?
+							</h3>
+							<h7 class="text-white mt-3">
+								여행가실 지역을 찾아보세요<br><br>
+							</h7>
+						</div>
+					</div>
+					
+
+				</div>
+			</div>
+			
+		
+
+			<div class="row">
+				<div class="col text-center">
+				
+				
+				
+				<div class="notice mt-3">
+					<div class="row my-5">
+						<div class="col mb-2">
+						<i class="bi bi-megaphone-fill text-danger fs-2"></i> <!-- image 추가 -->
+							<a th:href="@{/postList?boardNo=7000}"
+								class=" text-decoration-none text-danger fs-3">&ensp;공지사항</a>
+						</div>
+					</div>
+					
+					<div class = "row my-4" style="font-family: Jua, sans-serif;">
+						<div class="col mb-2">
+							<table class="table ">
+								<tbody class="">
+									<th:block th:if="${#lists.isEmpty(notifications)}">
+										<tr>
+											<td colspan="5" style="border: none;">게시글이 존재하지 않습니다.</td>
+										</tr>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(notifications)}">
+										<tr th:each="post : ${notifications}">
+											<td th:text="${post.postNo}"class="text-danger" >게시글 번호</td>
+											<td class="text-start">
+												<a th:href="@{|/postDetail?postNo=${post.postNo}&boardNo=7000&pageNum=1|}"
+													class="text-decoration-none text-danger"> 
+												<span th:text="${post.postTitle}">제목</span>
+												</a>
+											</td>
+											<td th:text="${post.writer}" class="text-danger">작성자</td>
+											<td th:text="${#dates.format(post.postDate, 'yyyy-MM-dd')}" class="text-danger">작성일</td>
+											<td th:text="${post.viewCount}" class="text-danger">조회수</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>	
+				
+				
+				<div class="notice2 mt-5">
+					<div class="row my-5">
+					<div class="col mb-2 fs-3" style="color: #F2055C;">
+					
+					<i class="bi bi-stars"></i> <!-- add image -->
+						&ensp;인기글&ensp;
+						<i class="bi bi-stars"></i> <!-- add image -->
+						</div>
+					</div>
+					
+					<div class="row" style="font-family: Jua, sans-serif;"> <!-- font -->
+						<div class="col  d-flex justify-content-end">
+							<table class="table">
+								<tbody>
+									<th:block th:if="${not #lists.isEmpty(topPosts)}">
+										<tr th:each="post : ${topPosts}">
+											<td th:text="${post.postNo}">번호</td>
+											<td class="text-start"><a th:href="@{|/postDetail?postNo=${post.postNo}&boardNo=${post.boardNo}&pageNum=1|}"
+													class="text-decoration-none text-dark"> 
+													<span th:text="${post.postTitle}">제목</span>
+												</a>
+											</td>
+											<td th:text="${post.writer}">작성자</td>
+											<td th:text="${#dates.format(post.postDate, 'yyyy-MM-dd')}">작성일</td>
+											<td th:text="${post.viewCount}">조회수</td>
+										</tr>
+									</th:block>
+									<th:block th:unless="${not #lists.isEmpty(topPosts)}">
+										<tr>
+											<td colspan="5" style="border: none;">인기 게시글이 존재하지 않습니다.</td> <!-- border-none -->
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					</div>
+
+
+					<div class="row mt-5">
+						<div class="col-4 mb-1">
+						
+						 <!-- photo class 추가 -->
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style=" background-image: url('images/asia.jpg'); "
+									onclick="location.href='postList?boardNo=1000';">
+								</div>
+							</div>
+
+						</div>
+						<div class="col-4 mb-1">
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style="background-image: url('images/europe.jpg');"
+									onclick="location.href='postList?boardNo=2000';">
+								</div>
+							</div>
+
+						</div>
+						<div class="col-4 mb-1">
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style="background-image: url('images/oceania.jpg');"
+									onclick="location.href='postList?boardNo=3000';">
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row text-center mb-5">
+						<div class="col-4">아시아</div>
+						<div class="col-4">유럽</div>
+						<div class="col-4">오세아니아</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-4 mb-1">
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style="background-image: url('images/NAmerica.jpg');"
+									onclick="location.href='postList?boardNo=4000';">
+								</div>
+							</div>
+
+						</div>
+						<div class="col-4 mb-1">
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style="background-image: url('images/SAmerica.jpg');"
+									onclick="location.href='postList?boardNo=5000';">
+								</div>
+							</div>
+
+						</div>
+						<div class="col-4 mb-1">
+
+							<div class="row">
+								<div class="col mx-2 photo"
+									style="background-image: url('images/africa.jpg');"
+									onclick="location.href='postList?boardNo=6000';">
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row mb-5 text-center">
+						<div class="col-4">북아메리카</div>
+						<div class="col-4">남아메리카</div>
+						<div class="col-4">아프리카</div>
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+
+
+
+
+		</div>
+	</div>
+
+
+
+
+
+
+
+</th:block>
+
+</html>
